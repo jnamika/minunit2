@@ -1,0 +1,53 @@
+MinUnit: a minimal unit testing framework for C99
+The original version is available at http://www.jera.com/techinfo/jtns/jtn002.html
+
+This is a simple unit testing framework written in C99. The framework only depends on <stdio.h> and <stdarg.h>.
+
+
+Example:
+The following example program illustrates the use of the framework with most of its features.
+
+        #include "minunit.h"
+
+        static void test_foo (void)
+        {
+            int foo = 1;
+            mu_assert(foo == 1);
+            mu_assert(foo == 0);
+            mu_assert_with_msg(foo == -1, "error: %d != -1", foo);
+        }
+
+        static void test_bar (int x, int y)
+        {
+            mu_assert_with_msg(x == y, "error: %d != %d", x, y);
+            mu_fail("failed");
+        }
+
+        int main (void)
+        {
+            mu_run_test(test_foo);
+            mu_run_test_with_args(test_bar, 0, 1);
+            mu_summary();
+        }
+
+
+--- Here is a sample session ---
+
+> make 
+gcc -c main.c -o main.o -std=c99 -pedantic -O -Wall -Wextra -g
+gcc -c minunit.c -o minunit.o -std=c99 -pedantic -O -Wall -Wextra -g
+gcc -o minunit-example main.o minunit.o -std=c99 -pedantic -O -Wall -Wextra -g
+> ./minunit-example 2> error.log
+test: test_foo()
+.FF
+test: test_bar()
+FF
+2 test(s), 5 assertion(s), 4 failure(s)
+20% passed
+> cat error.log
+1) Failure:main.c:7: assertion `foo == 0' failed
+2) Failure:main.c:8: error: 1 != -1
+3) Failure:main.c:13: error: 0 != 1
+4) Failure:main.c:14: failed
+
+
