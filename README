@@ -1,7 +1,11 @@
 MinUnit: a minimal unit testing framework for C99
-The original version is available at http://www.jera.com/techinfo/jtns/jtn002.html
+
+Copyright (c) 2009-2011, Jun Namikawa <jnamika@gmail.com>
+License: ISC license
+
 
 This is a simple unit testing framework written in C99. The framework only depends on <stdio.h> and <stdarg.h>.
+The original version is available at http://www.jera.com/techinfo/jtns/jtn002.html
 
 
 Example:
